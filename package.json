@@ -1,0 +1,28 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "inquirer": "^8.1.2"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Challett1129/team-profile-generator.git"
+  },
+  "author": "Collin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Challett1129/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/Challett1129/team-profile-generator#readme"
+}
