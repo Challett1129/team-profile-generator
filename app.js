@@ -3,9 +3,14 @@ const Engineer = require('./lib/Engineer')
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
 const generatePage = require('./src/page-template');
+const writeFile = require('./utils/generate-site');
+
 
 let ifManager = false; 
-let employeeArr = []
+let employeeArr = [];
+let engArr = []
+let internArr = [];
+let manArr = [];
 
 promptUser = () => {
     return inquirer
@@ -29,25 +34,60 @@ promptUser = () => {
                 type: 'list',
                 name: 'role', 
                 choices: ifManager ? ['Engineer', 'Intern'] : ['Manager', 'Engineer', 'Intern']
+            },
+            {
+                type: 'input',
+                name: 'officeNumber',
+                message: `What is your manager's office number?`,
+                when: ({ role }) => {
+                    if(role === 'Manager') {
+                        ifManager = true;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'github',
+                message: `What is this engineer's github?`,
+                when: ({ role }) => {
+                    if(role === 'Engineer') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'school',
+                message: `What school is this intern attending?`,
+                when:  ({ role }) => {
+                    if(role === 'Intern') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'confirm',
+                name: 'confirmAnother',
+                message: 'Would you like to add another team member?',
+                default: false
             }
         ])
-        .then(({ employeeName, email, id, role }) => {
-            if (role === 'Manager'){
-                ifManager = true;
-
-                const manager = new Manager(employeeName, email, id);
-
-                managerPrompt(manager);
-            } else if (role === 'Engineer') {
-                const engineer = new Engineer(employeeName, email, id);
-                engineerPrompt(engineer);
-
+        .then(employeeData => {
+            employeeArr.push(employeeData);
+            console.log(employeeArr);
+            if(employeeData.confirmAnother) {
+                return promptUser() 
             } else {
-                const intern = new Intern(employeeName, email, id);
-                internPrompt(intern);
+                return employeeArr;
             }
-            
-        })      
+        })
 }
 
 managerPrompt = (manager) => {
@@ -62,7 +102,7 @@ managerPrompt = (manager) => {
         .then(({ officeNumber }) => {
             manager.officeNumber = officeNumber;
 
-            employeeArr.push(manager);
+            manArr.push(manager);
             confirmAnotherEmployee();
         })
 }
@@ -79,7 +119,7 @@ engineerPrompt = (engineer) => {
         .then(({ github }) => {
             engineer.github = github;
 
-            employeeArr.push(engineer);
+            engArr.push(engineer);
             confirmAnotherEmployee();
         })
 }
@@ -94,7 +134,7 @@ internPrompt = (intern) => {
         .then(({ school }) => {
             intern.school = school;
             
-            employeeArr.push(intern);
+            internArr.push(intern);
             confirmAnotherEmployee();
         })
 }
@@ -113,7 +153,7 @@ confirmAnotherEmployee = () => {
             if (confirmAnother) {
                 promptUser();
             } else {
-                return generatePage(employeeArr);
+                return generatePage(manArr, engArr, internArr);                
             }
         })
 }
@@ -145,3 +185,10 @@ confirmAnotherEmployee = () => {
 //     }
 //   ]
 promptUser()
+    .then(employeeArr => {
+        employeeArr.map(role => {
+            if(role === 'Manager') {
+                
+            }
+        })
+    })
