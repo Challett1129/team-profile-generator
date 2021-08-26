@@ -5,7 +5,6 @@ const Intern = require('./lib/Intern');
 const generatePage = require('./src/page-template');
 const {writeFile, copyFile} = require('./utils/generate-site');
 
-
 let ifManager = false; 
 let employeeArr = [];
 let engArr = []
@@ -186,7 +185,6 @@ confirmAnotherEmployee = () => {
 //   ]
 
 const sortEmployee = employeeArr => {
-console.log(employeeArr);
 
     employeeArr.map(employee => {
         if(employee.role === 'Manager') {
@@ -207,10 +205,11 @@ console.log(employeeArr);
     })
 }
 
-promptUser()
+promptUser()     
     .then(sortEmployee)
     .then(() => {
         const HTML = generatePage(manArr, engArr, internArr);
         console.log(HTML)
         writeFile(HTML);
+        copyFile();
     })
