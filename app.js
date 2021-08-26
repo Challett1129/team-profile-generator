@@ -3,7 +3,7 @@ const Engineer = require('./lib/Engineer')
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
 const generatePage = require('./src/page-template');
-const writeFile = require('./utils/generate-site');
+const {writeFile, copyFile} = require('./utils/generate-site');
 
 
 let ifManager = false; 
@@ -81,7 +81,7 @@ promptUser = () => {
         ])
         .then(employeeData => {
             employeeArr.push(employeeData);
-            console.log(employeeArr);
+            // console.log(employeeArr);
             if(employeeData.confirmAnother) {
                 return promptUser() 
             } else {
@@ -184,11 +184,33 @@ confirmAnotherEmployee = () => {
 //       school: 'CrispinSchool'
 //     }
 //   ]
+
+const sortEmployee = employeeArr => {
+console.log(employeeArr);
+
+    employeeArr.map(employee => {
+        if(employee.role === 'Manager') {
+            const manager = new Manager(employee.employeeName, employee.email, employee.id, employee.officeNumber);
+            return manArr.push(manager);
+            // console.log(manArr);
+        } 
+        else if (employee.role === 'Engineer') {
+            const engineer = new Engineer(employee.employeeName, employee.email, employee.id, employee.github);
+            
+            return engArr.push(engineer);
+            // console.log(engArr);
+        } else {
+            const intern = new Intern(employee.employeeName, employee.email, employee.id, employee.school);
+            return internArr.push(intern); 
+            // console.log(internArr)
+        }
+    })
+}
+
 promptUser()
-    .then(employeeArr => {
-        employeeArr.map(role => {
-            if(role === 'Manager') {
-                
-            }
-        })
+    .then(sortEmployee)
+    .then(() => {
+        const HTML = generatePage(manArr, engArr, internArr);
+        console.log(HTML)
+        writeFile(HTML);
     })
