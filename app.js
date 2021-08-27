@@ -1,16 +1,21 @@
 const inquirer = require('inquirer');
+//imports employee classes
 const Engineer = require('./lib/Engineer')
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
 const generatePage = require('./src/page-template');
 const {writeFile, copyFile} = require('./utils/generate-site');
 
+//a variable to control if manager is an option in promptUser()
 let ifManager = false; 
+
+//Arrays for employees to be sorted into in the sortEmployee() function below
 let employeeArr = [];
 let engArr = []
 let internArr = [];
 let manArr = [];
 
+//inquirer prompt asks all relevent questions to package employee information
 promptUser = () => {
     return inquirer
         .prompt([
@@ -164,6 +169,7 @@ promptUser = () => {
 //     }
 //   ]
 
+//sorts employees by their roles and creates a new class object accordingly which .push into their assigned array
 const sortEmployee = employeeArr => {
 
     employeeArr.map(employee => {
@@ -185,6 +191,7 @@ const sortEmployee = employeeArr => {
     })
 }
 
+//prompts the user to answer questions to generate site, sorts employees, creates html, then generates html page and copies the style.css file
 promptUser()     
     .then(sortEmployee)
     .then(() => {

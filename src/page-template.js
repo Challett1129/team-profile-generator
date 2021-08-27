@@ -1,5 +1,5 @@
 const Manager = require("../lib/Manager");
-
+//returns a bootstrap card with manager information
 const managerCard = function(manArr) {
     return `
     ${manArr
@@ -24,7 +24,7 @@ const managerCard = function(manArr) {
         })}
     `
 };
-
+//returns a bootstrap card with engineer information
 const engineerCards = function(engArr) {
     return `
     ${engArr
@@ -50,7 +50,7 @@ const engineerCards = function(engArr) {
         .join('')}
     `
 };
-
+//returns a bootstrap card with intern information
 const internCards = function(internArr) {
     return `
     ${internArr
@@ -77,8 +77,9 @@ const internCards = function(internArr) {
     `
 };
 
+//returns generated html to be created in index.html in the dist folder
 module.exports = function(manArr, engArr, internArr) {
-// console.log(manArr, engArr, internArr);
+
 
 return `
 <!DOCTYPE html>
