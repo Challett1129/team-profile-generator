@@ -17,17 +17,41 @@ promptUser = () => {
             {
                 type: 'input',
                 name: 'employeeName',
-                message: `What is your employee's name?`
+                message: `What is your employee's name?`,
+                validate: nameInput => {
+                    if (nameInput) {
+                        return true;
+                    } else {
+                        console.log(`Please enter a name!`)
+                        return false;
+                    }
+                }
             },
             {
                 type: 'input', 
                 name: 'email',
-                message: `What is your employee's email?`
+                message: `What is your employee's email?`,
+                validate: emailInput => {
+                    if (emailInput) {
+                        return true;
+                    } else {
+                        console.log(`Please enter an email!`);
+                        return false;
+                    }
+                }
             },
             {
                 type: 'input',
                 name: 'id',
-                message: `What is your employee's id number?`
+                message: `What is your employee's ID number?`,
+                validate: idInput => {
+                    if (idInput) {
+                        return true;
+                    } else {
+                        console.log(`Please enter an ID!`)
+                        return false
+                    }
+                }
             },
             {
                 type: 'list',
@@ -45,6 +69,13 @@ promptUser = () => {
                     } else {
                         return false;
                     }
+                },
+                validate: numberInput => {
+                    if(numberInput) {
+                        return true;
+                    } else {
+                        console.log(`Please enter your manager's office number!`);
+                    }
                 }
             },
             {
@@ -55,6 +86,14 @@ promptUser = () => {
                     if(role === 'Engineer') {
                         return true;
                     } else {
+                        return false;
+                    }
+                },
+                validate: githubInput => {
+                    if(githubInput) {
+                        return true;
+                    } else {
+                        console.log(`Please enter a github account for your engineer!`);
                         return false;
                     }
                 }
@@ -68,6 +107,13 @@ promptUser = () => {
                         return true;
                     } else {
                         return false;
+                    }
+                },
+                validate: schoolInput => {
+                    if(schoolInput) {
+                        return true; 
+                    } else {
+                        console.log(`Please enter a school for your intern!`)
                     }
                 }
             },
@@ -89,73 +135,7 @@ promptUser = () => {
         })
 }
 
-managerPrompt = (manager) => {
-    return inquirer
-        .prompt([
-            {
-                type: 'input',
-                name: 'officeNumber',
-                message: `What is ${manager.name}'s office number?`
-            }
-        ])
-        .then(({ officeNumber }) => {
-            manager.officeNumber = officeNumber;
 
-            manArr.push(manager);
-            confirmAnotherEmployee();
-        })
-}
-
-engineerPrompt = (engineer) => {
-    return inquirer
-        .prompt([
-            {
-                type: 'input',
-                name: 'github',
-                message: `What is ${engineer.name}'s github?`
-            }
-        ])
-        .then(({ github }) => {
-            engineer.github = github;
-
-            engArr.push(engineer);
-            confirmAnotherEmployee();
-        })
-}
-
-internPrompt = (intern) => {
-    return inquirer
-        .prompt([{
-            type: 'input',
-            name: 'school',
-            message: `What school is ${intern.name} attending?`
-        }])
-        .then(({ school }) => {
-            intern.school = school;
-            
-            internArr.push(intern);
-            confirmAnotherEmployee();
-        })
-}
-
-confirmAnotherEmployee = () => {
-    inquirer
-        .prompt([
-            {
-                type: 'confirm',
-                name: 'confirmAnother',
-                message: 'Would you like to add another team member?',
-                default: false
-            }
-        ])
-        .then(({ confirmAnother }) => {
-            if (confirmAnother) {
-                promptUser();
-            } else {
-                return generatePage(manArr, engArr, internArr);                
-            }
-        })
-}
 
 // mockData = [
 //     Manager {
@@ -209,7 +189,6 @@ promptUser()
     .then(sortEmployee)
     .then(() => {
         const HTML = generatePage(manArr, engArr, internArr);
-        console.log(HTML)
         writeFile(HTML);
         copyFile();
     })
