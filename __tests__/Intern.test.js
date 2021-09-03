@@ -13,7 +13,7 @@ test(`Intern has a value of this.school`, () => {
     expect(intern.getSchool()).toEqual(this.school)
 })
 
-test(`Itern object returns its role`, () => {
+test(`Intern object returns its role`, () => {
     const intern = new Intern(`Collin`);
 
     expect(intern.getRole()).toEqual(`Intern`);

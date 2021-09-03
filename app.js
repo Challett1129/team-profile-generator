@@ -142,33 +142,6 @@ promptUser = () => {
 
 
 
-// mockData = [
-//     Manager {
-//       name: 'Collin',
-//       email: 'c@aol.com',
-//       id: '1',
-//       officeNumber: '12'
-//     },
-//     Engineer {
-//       name: 'Michael ',
-//       email: 'm@aol.com',
-//       id: '2',
-//       github: 'michaelGit'
-//     },
-//     Engineer {
-//       name: 'Chris',
-//       email: 'chris@aol.com',
-//       id: '3',
-//       github: 'chrisGit'
-//     },
-//     Intern {
-//       name: 'Crispin',
-//       email: 'Crsipin@aol.com',
-//       id: '4',
-//       school: 'CrispinSchool'
-//     }
-//   ]
-
 //sorts employees by their roles and creates a new class object accordingly which .push into their assigned array
 const sortEmployee = employeeArr => {
 
